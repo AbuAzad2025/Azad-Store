@@ -17,6 +17,16 @@ import {
     useRestoreBackupMutation
 } from '@/redux/features/settingApi';
 
+const normalizeImgSrc = (value, fallback) => {
+    const raw = typeof value === "string" ? value.trim().replace(/\\/g, "/") : "";
+    if (!raw) return fallback;
+    if (/^https?:\/\//i.test(raw)) return raw;
+    const noTrailing = raw.replace(/\/+$/, "");
+    if (!noTrailing) return fallback;
+    if (noTrailing.startsWith("/")) return noTrailing;
+    return `/${noTrailing}`;
+};
+
 const AdminSettings = () => {
     const router = useRouter();
     const [activeTab, setActiveTab] = useState('general');
@@ -25,8 +35,8 @@ const AdminSettings = () => {
     const [updateSettings, { isLoading: isUpdating }] = useUpdateGlobalSettingsMutation();
     const [downloadBackup] = useDownloadBackupMutation();
     const [restoreBackup, { isLoading: isRestoring }] = useRestoreBackupMutation();
-    const fallbackLogoPath = "/assets/img/logo/azad-logo.png";
-    const fallbackFaviconPath = "/assets/img/logo/azad-logo.png";
+    const fallbackLogoPath = "/assets/img/logo/logo.svg";
+    const fallbackFaviconPath = "/assets/img/logo/logo.svg";
 
     const { register, handleSubmit, setValue } = useForm();
 
@@ -42,8 +52,8 @@ const AdminSettings = () => {
             Object.keys(settings).forEach(key => {
                 setValue(key, settings[key]);
             });
-            setValue("logo", settings?.logo || fallbackLogoPath);
-            setValue("favicon", settings?.favicon || fallbackFaviconPath);
+            setValue("logo", normalizeImgSrc(settings?.logo, fallbackLogoPath));
+            setValue("favicon", normalizeImgSrc(settings?.favicon, fallbackFaviconPath));
             setValue("paymentCodEnabled", settings?.paymentCodEnabled ?? true);
             setValue("paymentCardEnabled", settings?.paymentCardEnabled ?? false);
             setValue("paymentPaypalEnabled", settings?.paymentPaypalEnabled ?? false);
@@ -110,6 +120,9 @@ const AdminSettings = () => {
         return <Loader />;
     }
 
+    const logoSrc = normalizeImgSrc(settings?.logo, fallbackLogoPath);
+    const faviconSrc = normalizeImgSrc(settings?.favicon, fallbackFaviconPath);
+
     return (
         <Wrapper>
             <SEO pageTitle={`${t("siteSettings")} | ${t("adminPanelTitle")}`} />
@@ -161,14 +174,14 @@ const AdminSettings = () => {
                                                         <label className="form-label">{t("logoUrlLabel")}</label>
                                                         <input type="text" className="form-control" {...register("logo")} />
                                                         <div className="mt-2">
-                                                            <img src={settings?.logo || fallbackLogoPath} alt={t("logoAlt")} width={50} height={50} style={{ objectFit: "contain" }} />
+                                                            <img src={logoSrc} alt={t("logoAlt")} width={50} height={50} style={{ objectFit: "contain" }} />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12 mb-3">
                                                         <label className="form-label">{t("faviconUrlLabel")}</label>
                                                         <input type="text" className="form-control" {...register("favicon")} />
                                                         <div className="mt-2">
-                                                            <img src={settings?.favicon || fallbackFaviconPath} alt={t("faviconAlt")} width={32} height={32} style={{ objectFit: "contain" }} />
+                                                            <img src={faviconSrc} alt={t("faviconAlt")} width={32} height={32} style={{ objectFit: "contain" }} />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12 mb-3">

@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { getCachedGlobalSettings, useGetGlobalSettingsQuery } from "@/redux/features/settingApi";
 
 const translations = {
   ar: {
@@ -1506,6 +1507,8 @@ const getInitialCurrency = () => {
 export const LanguageProvider = ({ children }) => {
   const [language, setLanguage] = useState(getInitialLanguage);
   const [currency, setCurrency] = useState(getInitialCurrency);
+  const isBrowser = typeof window !== "undefined";
+  const { data: settings } = useGetGlobalSettingsQuery(undefined, { skip: !isBrowser });
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -1522,6 +1525,19 @@ export const LanguageProvider = ({ children }) => {
     }
     localStorage.setItem("appCurrency", currency);
   }, [currency]);
+
+  useEffect(() => {
+    if (!isBrowser) return;
+    const stored = localStorage.getItem("appCurrency");
+    if (stored) return;
+
+    const cached = getCachedGlobalSettings();
+    const raw = settings?.currency ?? cached?.currency;
+    const normalized = typeof raw === "string" ? raw.trim().toUpperCase() : "";
+    if (normalized && currencyMeta[normalized]) {
+      setCurrency(normalized);
+    }
+  }, [isBrowser, settings?.currency]);
 
   const toggleLanguage = useCallback(() => {
     setLanguage((prev) => (prev === "ar" ? "en" : "ar"));

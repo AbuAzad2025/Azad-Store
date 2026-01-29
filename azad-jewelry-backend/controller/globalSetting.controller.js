@@ -20,6 +20,23 @@ const isDbReady = () => mongoose.connection.readyState === 1;
 const isRemoteUrl = (value) => typeof value === "string" && /^https?:\/\//i.test(value.trim());
 const isLocalSiteAssetPath = (value) => typeof value === "string" && value.trim().startsWith("/site-assets/");
 
+const normalizeLocalAssetValue = (value) => {
+  if (typeof value !== "string") return value;
+  const trimmed = value.trim().replace(/\\/g, "/");
+  if (!trimmed) return trimmed;
+  if (isRemoteUrl(trimmed)) return trimmed;
+
+  const noTrailingSlash = trimmed.replace(/\/+$/, "");
+  if (!noTrailingSlash) return "";
+
+  if (noTrailingSlash.startsWith("/site-assets/")) return noTrailingSlash;
+  if (noTrailingSlash.startsWith("/assets/")) return noTrailingSlash;
+  if (noTrailingSlash.startsWith("site-assets/")) return `/${noTrailingSlash}`;
+  if (noTrailingSlash.startsWith("assets/")) return `/${noTrailingSlash}`;
+
+  return noTrailingSlash;
+};
+
 const guessExtFromUrl = (url) => {
   try {
     const u = new URL(url);
@@ -206,13 +223,21 @@ const maybeDownloadSiteAssetToLocal = async ({ assetUrl, assetKey }) => {
 exports.getGlobalSettings = async (req, res, next) => {
   try {
     if (!isDbReady()) {
-      return res.status(200).json(new GlobalSetting().toObject());
+      const defaults = new GlobalSetting().toObject();
+      defaults.logo = normalizeLocalAssetValue(defaults.logo);
+      defaults.favicon = normalizeLocalAssetValue(defaults.favicon);
+      defaults.ogImage = normalizeLocalAssetValue(defaults.ogImage);
+      return res.status(200).json(defaults);
     }
     let settings = await GlobalSetting.findOne();
     if (!settings) {
       settings = await GlobalSetting.create({});
     }
-    res.status(200).json(settings);
+    const payload = settings.toObject();
+    payload.logo = normalizeLocalAssetValue(payload.logo);
+    payload.favicon = normalizeLocalAssetValue(payload.favicon);
+    payload.ogImage = normalizeLocalAssetValue(payload.ogImage);
+    res.status(200).json(payload);
   } catch (error) {
     next(error);
   }
@@ -222,18 +247,21 @@ exports.getGlobalSettings = async (req, res, next) => {
 exports.updateGlobalSettings = async (req, res, next) => {
   try {
     if (req?.body?.logo) {
+      req.body.logo = normalizeLocalAssetValue(req.body.logo);
       req.body.logo = await maybeDownloadSiteAssetToLocal({
         assetUrl: req.body.logo,
         assetKey: "logo",
       });
     }
     if (req?.body?.favicon) {
+      req.body.favicon = normalizeLocalAssetValue(req.body.favicon);
       req.body.favicon = await maybeDownloadSiteAssetToLocal({
         assetUrl: req.body.favicon,
         assetKey: "favicon",
       });
     }
     if (req?.body?.ogImage) {
+      req.body.ogImage = normalizeLocalAssetValue(req.body.ogImage);
       req.body.ogImage = await maybeDownloadSiteAssetToLocal({
         assetUrl: req.body.ogImage,
         assetKey: "og-image",

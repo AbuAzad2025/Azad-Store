@@ -16,6 +16,16 @@ const safeAsPath = (value) => {
   return pathOnly.startsWith("/") ? pathOnly : `/${pathOnly}`;
 };
 
+const normalizeImgHref = (value, fallback = "") => {
+  const raw = typeof value === "string" ? value.trim().replace(/\\/g, "/") : "";
+  if (!raw) return fallback;
+  if (/^https?:\/\//i.test(raw)) return raw;
+  const noTrailing = raw.replace(/\/+$/, "");
+  if (!noTrailing) return fallback;
+  if (noTrailing.startsWith("/")) return noTrailing;
+  return `/${noTrailing}`;
+};
+
 const SEO = ({
   pageTitle,
   pageDescription,
@@ -35,10 +45,10 @@ const SEO = ({
   const metaDescription =
     pageDescription || settings?.metaDescription || cachedSettings?.metaDescription || t("footerDesc");
 
-  const favicon =
-    settings?.favicon ||
-    cachedSettings?.favicon ||
-    "/assets/img/logo/azad-logo.png";
+  const favicon = normalizeImgHref(
+    settings?.favicon || cachedSettings?.favicon,
+    "/assets/img/logo/logo.svg"
+  );
 
   const isProd = process.env.NODE_ENV === "production";
   const autoNoIndex = router?.pathname?.startsWith("/admin");
@@ -54,8 +64,10 @@ const SEO = ({
     canonicalUrl ||
     (baseUrl ? `${baseUrl}${derivedPath === "/" ? "/" : derivedPath}` : "");
 
-  const resolvedOgImage =
-    ogImage || settings?.ogImage || cachedSettings?.ogImage || "";
+  const resolvedOgImage = normalizeImgHref(
+    ogImage || settings?.ogImage || cachedSettings?.ogImage || "",
+    ""
+  );
 
   const locale = language === "ar" ? "ar_AR" : "en_US";
 
