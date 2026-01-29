@@ -1,0 +1,12 @@
+export const getServerSideProps = async (context) => {
+  return {
+    redirect: {
+      destination: "/shop",
+      permanent: false,
+    },
+  };
+};
+
+export default function ProductDetailsSwatchesPage() {
+  return null;
+}

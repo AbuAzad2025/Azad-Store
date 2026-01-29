@@ -1,0 +1,59 @@
+{
+  "name": "azad-advanced-client",
+  "version": "0.1.0",
+  "private": true,
+  "author": "شركة ازاد للانظمة الذكية - المطور احمد غنام",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=18.18.0"
+  },
+  "scripts": {
+    "dev": "node -e \"const {spawnSync}=require('child_process');const path=require('path');delete process.env.NODE_TLS_REJECT_UNAUTHORIZED;const nextCli=path.join(process.cwd(),'node_modules','next','dist','bin','next');const r=spawnSync(process.execPath,[nextCli,'dev','--webpack'],{stdio:'inherit'});if(r.error)console.error(r.error);process.exit(typeof r.status==='number'?r.status:1);\"",
+    "build": "node -e \"const {spawnSync}=require('child_process');const path=require('path');delete process.env.NODE_TLS_REJECT_UNAUTHORIZED;const nextCli=path.join(process.cwd(),'node_modules','next','dist','bin','next');const env={...process.env,NODE_OPTIONS:process.env.NODE_OPTIONS||'--max-old-space-size=4096'};const r=spawnSync(process.execPath,[nextCli,'build','--webpack'],{stdio:'inherit',env});if(r.error)console.error(r.error);process.exit(typeof r.status==='number'?r.status:1);\"",
+    "start": "node -e \"const {spawnSync}=require('child_process');const path=require('path');delete process.env.NODE_TLS_REJECT_UNAUTHORIZED;const nextCli=path.join(process.cwd(),'node_modules','next','dist','bin','next');const r=spawnSync(process.execPath,[nextCli,'start'],{stdio:'inherit'});if(r.error)console.error(r.error);process.exit(typeof r.status==='number'?r.status:1);\"",
+    "lint": "eslint src",
+    "typecheck": "tsc -p jsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.5.2",
+    "@hookform/resolvers": "^3.1.0",
+    "@popperjs/core": "^2.11.6",
+    "@react-oauth/google": "^0.11.0",
+    "@reduxjs/toolkit": "^1.9.3",
+    "@stripe/react-stripe-js": "^2.1.0",
+    "@stripe/stripe-js": "^1.52.1",
+    "bootstrap": "^5.2.3",
+    "dayjs": "^1.11.7",
+    "js-cookie": "^3.0.5",
+    "next": "16.1.4",
+    "react": "18.2.0",
+    "react-copy-to-clipboard": "^5.1.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.43.9",
+    "react-modal": "^3.16.1",
+    "react-modal-video": "^2.0.0",
+    "react-paginate": "^8.2.0",
+    "react-range": "^1.8.14",
+    "react-range-slider-input": "^3.0.7",
+    "react-redux": "^8.0.5",
+    "react-simple-star-rating": "^5.1.7",
+    "react-slick": "^0.29.0",
+    "react-spinners": "^0.13.8",
+    "react-timer-hook": "^3.0.5",
+    "react-to-print": "^2.14.12",
+    "react-toastify": "^9.1.2",
+    "react-use": "^17.4.0",
+    "recharts": "^3.7.0",
+    "sass": "^1.59.3",
+    "sharp": "^0.34.5",
+    "slick-carousel": "^1.8.1",
+    "sweetalert2": "^11.26.17",
+    "swiper": "^9.1.1",
+    "yup": "^1.1.1"
+  },
+  "devDependencies": {
+    "eslint": "8.57.1",
+    "eslint-config-next": "15.5.0",
+    "typescript": "5.0.4"
+  }
+}

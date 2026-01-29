@@ -1,0 +1,264 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  6.2 Footer Style 2
+/*----------------------------------------*/
+
+.#{$theme-prifix}-footer{
+    $self : &;
+    &-style-2{
+        &.#{$theme-prifix}-footer-area {
+            background-color: #0b0b0b;
+            background-image: var(--tp-body-pattern);
+            background-size: 34px 34px;
+            position: relative;
+            z-index: 1;
+            padding-top: 20px;
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 3px;
+                background: linear-gradient(90deg, var(--tp-theme-red) 0%, var(--tp-theme-olive) 35%, var(--tp-theme-primary) 70%, var(--tp-common-black) 100%);
+            }
+        }
+        #{$self}{
+            // Dark Theme Implementation
+            &-area {
+                background-color: #0b0b0b; // Deep rich black
+                background-image: var(--tp-body-pattern);
+                background-size: 34px 34px;
+                position: relative;
+                z-index: 1;
+                padding-top: 20px;
+                
+                // Add a top border accent for luxury feel
+                &::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 3px;
+                    background: linear-gradient(90deg, var(--tp-theme-red) 0%, var(--tp-theme-olive) 35%, var(--tp-theme-primary) 70%, var(--tp-common-black) 100%);
+                }
+            }
+            
+            &-desc{
+                @extend %tp-ff-jost;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 1.6;
+                color: #a0a0a0; // Light grey text
+                margin-bottom: 20px;
+            }
+            
+            &-social{
+                & a{
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    background-color: rgba(255, 255, 255, 0.05);
+                    color: #fff;
+                    box-shadow: none;
+                    border-radius: 50%; // Circle looks more premium
+                    width: 40px;
+                    height: 40px;
+                    line-height: 38px;
+                    text-align: center;
+                    transition: all 0.3s ease;
+                    margin-right: 8px;
+                    display: inline-block;
+                    
+                    &:hover{
+                        background-color: var(--tp-theme-primary);
+                        border-color: var(--tp-theme-primary);
+                        color: #fff;
+                        transform: translateY(-3px);
+                    }
+                }
+            }
+            
+            &-widget{
+                &-title{
+                    @extend %tp-ff-jost;
+                    font-weight: 600;
+                    font-size: 18px;
+                    margin-bottom: 25px;
+                    color: #fff; // White title
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                }
+                & ul{
+                    & li{
+                        margin-bottom: 12px;
+                        & a{
+                            @extend %tp-ff-jost;
+                            font-size: 15px;
+                            font-weight: 400;
+                            color: #b0b0b0; // Light grey links
+                            transition: all 0.3s ease;
+                            display: inline-block;
+                            position: relative;
+                            padding-right: 0;
+                            
+                            &::after{
+                                display: none; 
+                            }
+                            &:hover{
+                                color: var(--tp-theme-brown); // Gold on hover
+                                padding-right: 8px; // Slight move effect
+                            }
+                        }
+                    }
+                }
+            }
+            
+            &-talk{
+                & span{
+                    @extend %tp-ff-jost;
+                    color: #888;
+                    display: block;
+                    margin-bottom: 5px;
+                    font-size: 14px;
+                }
+                & h4{
+                    @extend %tp-ff-jost;
+                    font-weight: 500;
+                    font-size: 24px;
+        
+                    & a{
+                        color: #fff;
+                        &:hover{
+                            color: var(--tp-theme-brown);
+                        }
+                    }
+        
+                }
+            }
+            
+            &-contact{
+                margin-top: 20px;
+                &-item {
+                    margin-bottom: 15px;
+                }
+                &-icon {
+                    margin-right: 15px; // LTR
+                    margin-left: 15px; // RTL support if needed (handled by bootstrap dir usually, but spacing needs care)
+                    span {
+                        color: var(--tp-theme-brown);
+                        font-size: 18px;
+                        margin-top: 3px;
+                        display: block;
+                    }
+                }
+                &-content{
+                    & p{
+                        @extend %tp-ff-jost;
+                        font-size: 15px;
+                        color: #b0b0b0;
+                        margin-bottom: 0;
+                        line-height: 1.5;
+                        
+                        & a{
+                            color: #b0b0b0;
+                            &:hover{
+                                color: var(--tp-theme-brown);
+                            }
+                        }
+                    }
+                }
+            }
+            
+            &-bottom-wrapper{
+                border-top: 1px solid rgba(255, 255, 255, 0.08);
+                padding: 25px 0;
+                margin-top: 40px;
+            }
+            
+            &-copyright{
+                & p{
+                    @extend %tp-ff-jost;
+                    margin-bottom: 0;
+                    font-size: 14px;
+                    color: #888;
+                    & a{
+                        color: var(--tp-theme-brown);
+                        &:hover {
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+            
+            &-subscribe {
+                &-input {
+                    position: relative;
+                    margin-bottom: 20px;
+                    
+                    input {
+                        width: 100%;
+                        height: 50px;
+                        background: rgba(255, 255, 255, 0.05);
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                        color: #fff;
+                        padding: 0 20px;
+                        border-radius: 4px;
+                        font-size: 14px;
+                        
+                        &::placeholder {
+                            color: #666;
+                        }
+                        
+                        &:focus {
+                            border-color: var(--tp-theme-brown);
+                            outline: none;
+                        }
+                    }
+                    button {
+                        position: absolute;
+                        right: 0; // Will be left in RTL
+                        top: 0;
+                        height: 100%;
+                        background: var(--tp-theme-brown);
+                        color: #fff;
+                        border: none;
+                        padding: 0 25px;
+                        border-radius: 0 4px 4px 0; // Fix radius for RTL later if needed
+                        font-weight: 500;
+                        font-size: 14px;
+                        transition: all 0.3s ease;
+                        
+                        &:hover {
+                            background: #fff;
+                            color: #000;
+                        }
+                    }
+                }
+                p {
+                    color: #a0a0a0;
+                    margin-bottom: 20px;
+                    font-size: 15px;
+                }
+            }
+        }
+        
+        // RTL Specific adjustments if direction is RTL
+        [dir="rtl"] & {
+            #{$self}-contact-icon {
+                margin-right: 0;
+                margin-left: 15px;
+            }
+            #{$self}-widget ul li a:hover {
+                padding-right: 0;
+                padding-left: 8px;
+            }
+            #{$self}-subscribe-input button {
+                right: auto;
+                left: 0;
+                border-radius: 4px 0 0 4px;
+            }
+        }
+    }
+}

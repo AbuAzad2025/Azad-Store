@@ -1,0 +1,180 @@
+@import '~bootstrap/scss/bootstrap';
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+@import "~slick-carousel/slick/slick.css"; 
+@import "swiper/css/bundle";
+@import "~react-modal-video/scss/modal-video.scss";
+@import '../../public/assets/scss/main.scss';
+
+html[dir="rtl"] body {
+  direction: rtl;
+  text-align: right;
+  font-family: var(--tp-ff-body), system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+}
+
+html[dir="ltr"] body {
+  direction: ltr;
+  text-align: left;
+  font-family: var(--tp-ff-body), system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+}
+
+.tp-header-lang ul li button,
+.tp-header-currency ul li button,
+.offcanvas__lang-list li button,
+.offcanvas__currency-list li button {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.tp-header-area,
+.tp-footer-area {
+  position: relative;
+  isolation: isolate;
+}
+
+.tp-header-area::after,
+.tp-footer-area::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, #000000 0 25%, #ffffff 25% 50%, #007a3d 50% 75%, #ce1126 75% 100%) top/100% 4px no-repeat,
+    radial-gradient(120% 140% at -10% 0%, rgba(206, 17, 38, 0.18) 0%, rgba(206, 17, 38, 0) 60%),
+    radial-gradient(120% 140% at 110% 0%, rgba(0, 122, 61, 0.14) 0%, rgba(0, 122, 61, 0) 60%),
+    linear-gradient(135deg, rgba(0, 0, 0, 0.05) 0%, rgba(255, 255, 255, 0.04) 100%);
+}
+
+:root {
+  --tp-surface-1: #fffdf9;
+  --tp-surface-2: #fff7f0;
+  --tp-surface-3: #f6f2ea;
+  --tp-footer-grey-1: #f3f6f4;
+
+  --tp-body-bg: var(--tp-surface-1);
+  --tp-body-pattern:
+    radial-gradient(circle at 1px 1px, rgba(1, 15, 28, 0.045) 1px, transparent 1.6px),
+    repeating-linear-gradient(45deg, rgba(0, 122, 61, 0.045) 0 10px, rgba(0, 122, 61, 0) 10px 34px),
+    repeating-linear-gradient(-45deg, rgba(206, 17, 38, 0.035) 0 10px, rgba(206, 17, 38, 0) 10px 36px),
+    linear-gradient(135deg, rgba(0, 0, 0, 0.02) 0%, rgba(255, 255, 255, 0.05) 55%, rgba(0, 0, 0, 0.015) 100%);
+  --tp-body-pattern-size: 22px 22px, 320px 320px, 360px 360px, 100% 100%;
+
+  --tp-pal-green: #007a3d;
+  --tp-pal-red: #ce1126;
+  --tp-pal-black: #000000;
+  --tp-pal-white: #ffffff;
+}
+
+.grey-bg,
+.grey-bg-2,
+.grey-bg-5,
+.grey-bg-6,
+.grey-bg-7,
+.grey-bg-8,
+.grey-bg-9,
+.white-bg,
+[data-bg-color="footer-bg-grey"],
+[data-bg-color="footer-bg-white"] {
+  background-image:
+    radial-gradient(120% 140% at -10% 0%, rgba(206, 17, 38, 0.10) 0%, rgba(206, 17, 38, 0) 62%),
+    radial-gradient(120% 140% at 110% 0%, rgba(0, 122, 61, 0.10) 0%, rgba(0, 122, 61, 0) 62%),
+    linear-gradient(135deg, rgba(0, 0, 0, 0.028) 0%, rgba(255, 255, 255, 0.035) 100%);
+  background-size: auto;
+}
+
+.tp-section-title,
+.tp-section-title-2,
+.tp-section-title-3,
+.tp-section-title-4,
+.tp-section-title-5,
+.tp-section-title-6,
+.tp-section-title-7 {
+  color: var(--tp-heading-secondary);
+}
+
+@supports (-webkit-background-clip: text) {
+  .tp-section-title,
+  .tp-section-title-2,
+  .tp-section-title-3,
+  .tp-section-title-4,
+  .tp-section-title-5,
+  .tp-section-title-6,
+  .tp-section-title-7 {
+    background-image: linear-gradient(
+      90deg,
+      rgba(1, 15, 28, 0.96) 0%,
+      var(--tp-theme-primary) 34%,
+      var(--tp-pal-green) 68%,
+      var(--tp-pal-red) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+@supports (-webkit-background-clip: text) {
+  :where(h1, h2, h3, h4, h5, h6, span)[class*="tp-"][class*="title"],
+  :where(h1, h2, h3, h4, h5, h6, span)[class^="profile__"][class*="title"] {
+    background-image: linear-gradient(
+      90deg,
+      rgba(1, 15, 28, 0.96) 0%,
+      var(--tp-theme-primary) 34%,
+      var(--tp-pal-green) 68%,
+      var(--tp-pal-red) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  :where(h1, h2, h3, h4, h5, h6, span)[class*="tp-"][class*="title"] :where(a, button),
+  :where(h1, h2, h3, h4, h5, h6, span)[class^="profile__"][class*="title"] :where(a, button) {
+    background-image: inherit;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  :where(h1, h2, h3, h4, h5, h6, span)[class*="tp-"][class*="title"] :where(a, button):hover,
+  :where(h1, h2, h3, h4, h5, h6, span)[class^="profile__"][class*="title"] :where(a, button):hover {
+    background-image: inherit;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+@media (max-width: 575px) {
+  body {
+    padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .tp-product-details-title {
+    font-size: clamp(22px, 6vw, 30px);
+    line-height: 1.15;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,31 @@
+
+// font url
+
+$font-url: 'https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Charm:wght@400;700&family=Jost:wght@300;400;500;600;700&family=Oregano&family=Roboto:wght@300;400;500;700;900&display=swap';
+
+// font family
+$font-family: (
+    'ff': (
+        'body': "'Cairo', sans-serif",
+        'heading': "'Cairo', sans-serif",
+        'p': "'Cairo', sans-serif",
+        'jost': "'Cairo', sans-serif",
+        'space': "'Cairo', sans-serif",
+        'fontawesome': '"Font Awesome 6 Free"',
+        'roboto': "'Cairo', sans-serif",
+        'oregano': "'Oregano', cursive",
+        'charm': "'Charm', cursive",
+    )
+);
+
+
+
+// font size
+$font-size: (
+    'fz': (
+        'body': 14px,
+        'p': 14px,
+    )
+);
+
+

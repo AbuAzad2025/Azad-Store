@@ -1,0 +1,12 @@
+.local-mongo/
+dump/
+**/node_modules/
+**/.next/
+**/out/
+**/build/
+**/.vercel/
+**/.env
+**/.env.*
+!**/.env.example
+*.log
+.DS_Store

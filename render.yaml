@@ -1,0 +1,77 @@
+services:
+  - type: web
+    name: azad-backend
+    runtime: node
+    rootDir: azad-jewelry-backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false
+      - key: TOKEN_SECRET
+        generateValue: true
+      - key: JWT_SECRET_FOR_VERIFY
+        generateValue: true
+      - key: ORDER_ENCRYPTION_KEY
+        generateValue: true
+      - key: ORDER_ENCRYPTION_REQUIRED
+        value: "false"
+      - key: STORE_URL
+        fromService:
+          type: web
+          name: azad-client
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: ADMIN_URL
+        fromService:
+          type: web
+          name: azad-client
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: CORS_ORIGINS
+        fromService:
+          type: web
+          name: azad-client
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_PASS
+        sync: false
+      - key: HOST
+        sync: false
+      - key: EMAIL_PORT
+        sync: false
+      - key: SERVICE
+        sync: false
+      - key: CLOUDINARY_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: CLOUDINARY_UPLOAD_PRESET
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+
+  - type: web
+    name: azad-client
+    runtime: node
+    rootDir: azad-jewelry-client
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_API_BASE_URL
+        fromService:
+          type: web
+          name: azad-backend
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: NEXT_PUBLIC_STRIPE_KEY
+        sync: false
+      - key: NEXT_PUBLIC_GOOGLE_CLIENT_ID
+        sync: false
